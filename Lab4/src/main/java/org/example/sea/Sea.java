@@ -20,7 +20,7 @@ public class Sea implements Plurable, HasCases {
         this.temperature = temperature;
     }
 
-    public String assure() throws DepthNotFoundException {
+    public String assure(){
         if (getDepth()==null) {
             throw new DepthNotFoundException("Depth assigned no or incorrect value");
         }
