@@ -1,0 +1,229 @@
+@startuml
+class org.example.App {
++ {static} void main(String[])
+}
+class org.example.commands.Insert {
+- boolean shutDown
++ boolean execute(String[])
++ boolean executeInScriptMode(String[],List<String>)
++ void verifyArguments(String[])
+}
+enum org.example.collection.VehicleType {
++  CAR
++  SUBMARINE
++  SHIP
++  CHOPPER
++  SPACESHIP
+}
+class org.example.commands.FilterContainsName {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.Exit {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.ExecuteScript {
++ boolean execute(String[])
++ boolean executeInScriptMode(String[],List<String>)
++ void verifyArguments(String[])
+}
+class org.example.commands.Save {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.Update {
+- boolean shutDown
++ boolean execute(String[])
+}
+interface org.example.commands.Describable {
++ String getDescription()
+}
+class org.example.commands.Clear {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.managers.CollectionManager {
+- {static} Integer id
+- {static} LinkedHashMap<String,Vehicle> vehicleMap
+- {static} LocalDate initTime
++ {static} void add(String,Vehicle)
++ {static} LocalDate getInitTime()
++ {static} void remove(String)
++ {static} void setVehicleMap(LinkedHashMap<String,Vehicle>)
++ {static} LinkedHashMap<String,Vehicle> getVehicleMap()
++ {static} boolean checkKey(String)
++ {static} Integer getSize()
++ {static} void clear()
++ {static} Integer updateId()
++ {static} Vehicle getVehicleByKey(String)
++ {static} void sort()
++ {static} boolean isValid()
++ {static} void update(String)
++ {static} Vehicle createVehicle()
+}
+class org.example.managers.CollectionManager$Extractor {
++ {static} String extractName(Scanner)
++ {static} String[] extractCoordinates(Scanner)
++ {static} Integer extractEnginePower(Scanner)
++ {static} VehicleType extractVehicleType(Scanner)
++ {static} FuelType extractFuelType(Scanner)
+}
+class org.example.exceptions.RecursionDepthExceededException {
+}
+class org.example.collection.Vehicle {
+- Integer id
+- String name
+- Coordinates coordinates
+- java.time.LocalDate creationDate
+- Integer enginePower
+- VehicleType type
+- FuelType fuelType
++ Integer getId()
++ String getName()
++ Coordinates getCoordinates()
++ Float getX()
++ Double getY()
++ FuelType getFuelType()
++ Integer getEnginePower()
++ LocalDate getCreationDate()
++ VehicleType getType()
++ void setId(Integer)
++ void setName(String)
++ void setCoordinates(Coordinates)
++ void setCreationDate(LocalDate)
++ void setType(VehicleType)
++ void setEnginePower(Integer)
++ void setFuelType(FuelType)
++ boolean isValid()
++ String toString()
++ boolean equals(Object)
++ int hashCode()
++ int compareTo(Vehicle)
+}
+interface org.example.commands.HasComplicatedArguments {
+}
+class org.example.managers.DumpManager {
+- {static} File file
++ {static} void setFile(String)
++ {static} void load()
++ {static} void dump()
+}
+class org.example.commands.RemoveLowerKey {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.AverageOfEnginePower {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.RemoveLower {
+- boolean shutDown
++ boolean execute(String[])
++ boolean executeInScriptMode(String[],List<String>)
++ void verifyArguments(String[])
+}
+enum org.example.collection.FuelType {
++  GASOLINE
++  ALCOHOL
++  PLASMA
+}
+class org.example.managers.ConsoleManager {
+- {static} Integer recursionDepth
++ {static} void run()
++ {static} boolean executeScript(String)
++ {static} void setRecursionDepth(Integer)
+}
+class org.example.commands.ReplaceIfGreater {
+- boolean shutDown
++ boolean execute(String[])
++ boolean executeInScriptMode(String[],List<String>)
++ void verifyArguments(String[])
+}
+class org.example.commands.Show {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.exceptions.ExcessiveArgumentsException {
+}
+class org.example.exceptions.NotEnoughArgumentsException {
+}
+class org.example.commands.RemoveKey {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.MinByCoordinates {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.exceptions.IncorrectCreationException {
+}
+class org.example.managers.CommandManager {
+- {static} HashMap<String,Command> commands
++ {static} void newCommand(String,Command)
++ {static} Set<String> getCommands()
++ {static} Command getCommand(String)
++ {static} boolean execute(String[])
++ {static} boolean executeInScriptMode(String[],List<String>)
+}
+class org.example.commands.Info {
+- boolean shutDown
++ boolean execute(String[])
+}
+class org.example.commands.Help {
+- boolean shutDown
++ boolean execute(String[])
+}
+abstract class org.example.commands.Command {
+- String name
+- String description
++ {abstract}boolean execute(String[])
++ String getName()
++ boolean executeInScriptMode(String[],List<String>)
++ String getDescription()
++ String toString()
++ boolean equals(Object)
++ int hashCode()
+}
+class org.example.collection.Coordinates {
+- Float x
+- Double y
++ Float getX()
++ Double getY()
++ Double getDistance()
++ String toString()
++ boolean equals(Object)
++ int hashCode()
++ int compareTo(Coordinates)
+}
+class org.example.exceptions.CollectionNotValidException {
+}
+
+
+org.example.commands.HasComplicatedArguments <|.. org.example.commands.Insert
+org.example.commands.Command <|-- org.example.commands.Insert
+org.example.commands.Command <|-- org.example.commands.FilterContainsName
+org.example.commands.Command <|-- org.example.commands.Exit
+org.example.commands.Command <|-- org.example.commands.ExecuteScript
+org.example.commands.Command <|-- org.example.commands.Save
+org.example.commands.Command <|-- org.example.commands.Update
+org.example.commands.Command <|-- org.example.commands.Clear
+org.example.managers.CollectionManager +.. org.example.managers.CollectionManager$Extractor
+org.example.exceptions.RuntimeException <|-- org.example.exceptions.RecursionDepthExceededException
+org.example.collection.Comparable <|.. org.example.collection.Vehicle
+org.example.commands.Command <|-- org.example.commands.RemoveLowerKey
+org.example.commands.Command <|-- org.example.commands.AverageOfEnginePower
+org.example.commands.Command <|-- org.example.commands.RemoveLower
+org.example.commands.Command <|-- org.example.commands.ReplaceIfGreater
+org.example.commands.Command <|-- org.example.commands.Show
+org.example.exceptions.RuntimeException <|-- org.example.exceptions.ExcessiveArgumentsException
+org.example.exceptions.RuntimeException <|-- org.example.exceptions.NotEnoughArgumentsException
+org.example.commands.Command <|-- org.example.commands.RemoveKey
+org.example.commands.Command <|-- org.example.commands.MinByCoordinates
+org.example.exceptions.RuntimeException <|-- org.example.exceptions.IncorrectCreationException
+org.example.commands.Command <|-- org.example.commands.Info
+org.example.commands.Command <|-- org.example.commands.Help
+org.example.commands.Describable <|.. org.example.commands.Command
+org.example.collection.Comparable <|.. org.example.collection.Coordinates
+org.example.exceptions.RuntimeException <|-- org.example.exceptions.CollectionNotValidException
+@enduml
